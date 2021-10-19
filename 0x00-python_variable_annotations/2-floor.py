@@ -3,5 +3,5 @@
 
 
 def floor(n: float) -> int:
-    """Concatenated two strings"""
+    """Convet float to int"""
     return int(n)
