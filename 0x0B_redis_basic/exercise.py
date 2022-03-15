@@ -109,7 +109,7 @@ class Cache:
         Retrieve data from cache and cnverts it to string format 
         """
         result = self._redis.get(key)
-        result_converted = str(result)
+        result_converted = result.decode("utf-8")
         return result_converted
     
     def get_int(self, key: str) -> int:
@@ -117,6 +117,6 @@ class Cache:
         Retrieve data from cache and converts it to int format
         """
         result = self._redis.get(key)
-        result_converted = int(result)
+        result_converted = int(result.decode("utf-8"))
         return result_converted
         
