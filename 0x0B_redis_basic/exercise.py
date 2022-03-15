@@ -2,10 +2,10 @@
 """
 Writing strings to Redis
 """
-from typing import Union, Callable, Optional
-import redis
-import uuid
 from functools import wraps
+import redis
+from typing import Union, Callable, Optional
+import uuid
 
 
 def count_calls(func: Callable) -> Callable:
@@ -93,7 +93,7 @@ class Cache:
         """
         Store data and return the random key created
         """
-        key = str(uuid.uuid1())
+        key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
 
@@ -120,5 +120,8 @@ class Cache:
         Retrieve data from cache and converts it to int format
         """
         result = self._redis.get(key)
-        result_converted = int(result.decode("utf-8"))
+        try:
+            result_converted = int(result.decode("utf-8"))
+        except Exception:
+            result_converted = 0
         return result_converted
