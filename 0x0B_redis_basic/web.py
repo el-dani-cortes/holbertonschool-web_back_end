@@ -11,13 +11,13 @@ r = redis.Redis()
 
 def count_requests(method: Callable) -> Callable:
     """
-    Counting how many times a request has been made 
+    Counting how many times a request has been made
     """
 
     @wraps(method)
     def wrapper(url):
-        """ 
-        Wrapper for decorator functionality 
+        """
+        Wrapper for decorator functionality
         """
         r.incr(f"count:{url}")
         cached_html = r.get(f"cached:{url}")
