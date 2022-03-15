@@ -40,7 +40,7 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
-def replay(fn: Callable):
+def replay(fn: Callable) -> None:
     """Display the history calls of particular function"""
     r = redis.Redis()
     f_name = fn.__qualname__
