@@ -14,12 +14,12 @@ def count_calls(func: Callable) -> Callable:
     Increments the count for that key every time the method is called
     and returns the value returned by the original method.
     """
+    key = func.__qualname__
     @wraps(func)
     def wrapper(self, *args, **kwargs):
         """ 
         Wrapper for decorator functionality 
         """
-        key = func.__qualname__
         self._redis.incr(key)
         return func(self, *args, **kwargs)
     return wrapper
