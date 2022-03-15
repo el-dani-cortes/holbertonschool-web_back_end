@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Writing strings to Redis
+Learning Redis Basic with python
 """
 from functools import wraps
 import redis
@@ -103,7 +103,7 @@ class Cache:
         Retrieve data from cache and cnverts it to the desired format
         """
         result = self._redis.get(key)
-        if fn is not None:
+        if fn:
             result = fn(result)
         return result
 
