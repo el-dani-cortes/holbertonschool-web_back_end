@@ -47,7 +47,7 @@ def call_history(func: Callable) -> Callable:
     return wrapper
 
 
-def replay(fn: Callable) -> None:
+def replay(fn: Callable):
     """
     Display the history of calls of a particular function
     """
@@ -100,7 +100,7 @@ class Cache:
     def get(self, key: str, fn: Optional[Callable] = None
             ) -> Union[str, bytes, int, float]:
         """
-        Retrieve data from cache and cnverts it to the desired format
+        Retrieve data from cache and converts it to the desired format
         """
         result = self._redis.get(key)
         if fn:
@@ -109,7 +109,7 @@ class Cache:
 
     def get_str(self, key: str) -> str:
         """
-        Retrieve data from cache and cnverts it to string format
+        Retrieve data from cache and converts it to string format
         """
         result = self._redis.get(key)
         result_converted = result.decode("utf-8")
