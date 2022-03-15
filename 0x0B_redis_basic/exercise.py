@@ -3,7 +3,6 @@
 Writing strings to Redis
 """
 from typing import Union, Callable, Optional
-from unittest import result 
 import redis
 import uuid
 from functools import wraps
@@ -15,13 +14,15 @@ def count_calls(func: Callable) -> Callable:
     and returns the value returned by the original method.
     """
     key = func.__qualname__
+
     @wraps(func)
     def wrapper(self, *args, **kwargs):
-        """ 
-        Wrapper for decorator functionality 
+        """
+        Wrapper for decorator functionality
         """
         self._redis.incr(key)
         return func(self, *args, **kwargs)
+
     return wrapper
 
 
@@ -32,8 +33,8 @@ def call_history(func: Callable) -> Callable:
 
     @wraps(func)
     def wrapper(self, *args, **kwargs):
-        """ 
-        Wrapper for decorator functionality 
+        """
+        Wrapper for decorator functionality
         """
         input = str(args)
         self._redis.rpush(func.__qualname__ + ":inputs", input)
@@ -74,6 +75,7 @@ def replay(fn: Callable) -> None:
 
         print(f'{f_name}(*{i}) -> {o}')
 
+
 class Cache:
     """
     Create cache and store the data
@@ -95,9 +97,10 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Optional[Callable] = None
+            ) -> Union[str, bytes, int, float]:
         """
-        Retrieve data from cache and cnverts it to the desired format 
+        Retrieve data from cache and cnverts it to the desired format
         """
         result = self._redis.get(key)
         if fn is not None:
@@ -106,12 +109,12 @@ class Cache:
 
     def get_str(self, key: str) -> str:
         """
-        Retrieve data from cache and cnverts it to string format 
+        Retrieve data from cache and cnverts it to string format
         """
         result = self._redis.get(key)
         result_converted = result.decode("utf-8")
         return result_converted
-    
+
     def get_int(self, key: str) -> int:
         """
         Retrieve data from cache and converts it to int format
@@ -119,4 +122,3 @@ class Cache:
         result = self._redis.get(key)
         result_converted = int(result.decode("utf-8"))
         return result_converted
-        
