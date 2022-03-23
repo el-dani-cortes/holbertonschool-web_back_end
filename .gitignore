@@ -1,0 +1,15 @@
+*.egg-info
+*.pyc
+*.tar.gz
+
+__pycache__
+
+build
+dist
+tags
+venv
+venvs
+
+.eggs
+.idea
+.pytest_cache
